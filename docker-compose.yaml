@@ -1,0 +1,8 @@
+version: '3'
+services:
+  lib:
+    build: .
+    volumes: # カレントディレクトリの内容をコンテナ上の/appディレクトリにマウント
+      - .:/haribote
+    ports:
+      - 3000:3000

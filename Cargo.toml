@@ -1,0 +1,25 @@
+[package]
+name = "rust-os"
+version = "0.1.0"
+authors = ["k3nt0w <kento.watanabe.11@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[profile.dev]
+opt-level = 2
+lto = true
+panic = "abort"
+
+[profile.release]
+opt-level = 2
+lto = true
+panic = "abort"
+
+[lib]
+name = "haribote_os"
+crate-type = ["staticlib"]
+
+[package.metadata.cargo-xbuild]
+memcpy = true
+sysroot_path = "target/sysroot"

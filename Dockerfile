@@ -1,16 +1,18 @@
-FROM ubuntu:16.04
+FROM rustlang/rust:nightly
 
-WORKDIR /haribote
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y \
   build-essential \
+  nasm \
   gcc-multilib \
-  qemu-system \
   mtools \
   curl
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
-ENV HOME /root
-ENV PATH $HOME/.cargo/bin:$PATH
-RUN rustup default nightly && rustup override set nightly
+WORKDIR /haribote
+COPY . /haribote
+VOLUME /haribote
+
+RUN rustup component add rust-src
+RUN cargo install cargo-xbuild
+RUN cargo xbuild --target i686-haribote.json
