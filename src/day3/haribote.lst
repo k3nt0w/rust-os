@@ -1,0 +1,27 @@
+     1                                  
+     2                                  CYLS    EQU     0x0ff0
+     3                                  LEDS    EQU     0x0ff1
+     4                                  VMODE   EQU     0x0ff2
+     5                                  SCRNX   EQU     0x0ff4
+     6                                  SCRNY   EQU     0x0ff6
+     7                                  VRAM    EQU     0x0ff8
+     8                                  
+     9                                  
+    10                                          ORG     0xc200
+    11                                  
+    12 00000000 B013                            MOV     AL, 0x13
+    13 00000002 B400                            MOV     AH, 0x00
+    14 00000004 CD10                            INT     0x10
+    15                                  
+    16 00000006 C606F20F08                      MOV     BYTE [VMODE], 8
+    17 0000000B C706F40F4001                    MOV     WORD [SCRNX], 320
+    18 00000011 C706F60FC800                    MOV     WORD [SCRNY], 200
+    19 00000017 66C706F80F00000A00              MOV     DWORD [VRAM], 0x000a0000
+    20                                  
+    21 00000020 B402                            MOV     AH, 0x02
+    22 00000022 CD16                            INT     0x16
+    23 00000024 A2F10F                          MOV     [LEDS], AL
+    24                                  
+    25                                  fin:
+    26 00000027 F4                              HLT
+    27 00000028 EBFD                            JMP     fin
