@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  "rust.all_targets": false,
+  "rust.sysroot": "./target/sysroot"
+}
