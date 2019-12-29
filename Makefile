@@ -32,7 +32,6 @@ asm :
 
 img :
 	make clean
-	cargo xbuild --target i686-haribote.json
 	make $(IMG)
 
 clean :

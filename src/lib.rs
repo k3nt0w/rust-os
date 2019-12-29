@@ -12,8 +12,21 @@ fn hlt() {
 }
 
 #[no_mangle]
+fn fill(i: u32, color: u8) {
+    // &mut参照によって、借用しているリソースを変更できるようになる
+    let ptr = unsafe { &mut *(i as *mut u8) };
+    // &mut参照だから * がついている
+    // 生ポインタで指定したアドレスに直接色情報を入れている
+    *ptr = color
+}
+
+#[no_mangle]
 #[start]
 pub extern "C" fn haribote_os() -> ! {
+    let color: u8 = 3;
+    for i in 0xa0000..0xaffff {
+        fill(i, color);
+    }
     loop {
         hlt()
     }
