@@ -20,7 +20,6 @@ default:
 $(OUTPUT_DIR)/%.bin: $(ASM_DIR)/%.asm Makefile $(OUTPUT_DIR_KEEP)
 	nasm $< -o $@
 
-# catで結合してるだけ
 $(OUTPUT_DIR)/haribote.sys : $(OUTPUT_DIR)/asmhead.bin $(OUTPUT_DIR)/kernel.bin
 	cat $^ > $@
 
@@ -33,6 +32,7 @@ asm :
 
 img :
 	make clean
+	cargo xbuild --target i686-haribote.json
 	make $(IMG)
 
 clean :
