@@ -3,16 +3,27 @@ ASM_DIR := asm
 OUTPUT_DIR_KEEP := $(OUTPUT_DIR)/.keep
 IMG := $(OUTPUT_DIR)/haribote.img
 
+# ターゲット名: 依存ファイル名
+#      コマンド行
+
 default:
 	make img
 
-$(OUTPUT_DIR)/ipl.bin: $(ASM_DIR)/ipl.asm Makefile $(OUTPUT_DIR_KEEP)
-$(OUTPUT_DIR)/asmhead.bin: $(ASM_DIR)/asmhead.asm Makefile $(OUTPUT_DIR_KEEP)
+# $< : 最初の依存ファイルの名前
+# $@ : ターゲットファイル名
+# $% : ターゲットがアーカイブメンバだったときのターゲットメンバ名
+# $? : ターゲットより新しいすべての依存ファイル名
+# $^ : すべての依存ファイルの名前
+# $+ : Makefileと同じ順番の依存ファイルの名前
+# $* : サフィックスを除いたターゲットの名前
 
 $(OUTPUT_DIR)/%.bin: $(ASM_DIR)/%.asm Makefile $(OUTPUT_DIR_KEEP)
+	# $< : 最初の依存ファイルの名前
+	# $@ : ターゲットファイル名
 	nasm $< -o $@
 
 $(OUTPUT_DIR)/haribote.sys : $(OUTPUT_DIR)/asmhead.bin $(OUTPUT_DIR)/kernel.bin
+	# catで結合してるだけ
 	cat $^ > $@
 
 $(IMG) : $(OUTPUT_DIR)/ipl.bin $(OUTPUT_DIR)/haribote.sys Makefile
