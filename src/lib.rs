@@ -23,9 +23,8 @@ fn fill(i: u32, color: u8) {
 #[no_mangle]
 #[start]
 pub extern "C" fn haribote_os() -> ! {
-    let color: u8 = 3;
     for i in 0xa0000..0xaffff {
-        fill(i, color);
+        fill(i, (i as u8) & 0x0f);
     }
     loop {
         hlt()
