@@ -18,12 +18,10 @@ default:
 # $* : サフィックスを除いたターゲットの名前
 
 $(OUTPUT_DIR)/%.bin: $(ASM_DIR)/%.asm Makefile $(OUTPUT_DIR_KEEP)
-	# $< : 最初の依存ファイルの名前
-	# $@ : ターゲットファイル名
 	nasm $< -o $@
 
+# catで結合してるだけ
 $(OUTPUT_DIR)/haribote.sys : $(OUTPUT_DIR)/asmhead.bin $(OUTPUT_DIR)/kernel.bin
-	# catで結合してるだけ
 	cat $^ > $@
 
 $(IMG) : $(OUTPUT_DIR)/ipl.bin $(OUTPUT_DIR)/haribote.sys Makefile
@@ -34,6 +32,7 @@ asm :
 	make $(OUTPUT_DIR)/ipl.bin
 
 img :
+	make clean
 	make $(IMG)
 
 clean :
